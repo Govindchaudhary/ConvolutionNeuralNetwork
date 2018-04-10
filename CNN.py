@@ -12,6 +12,7 @@ classifier = Sequential()
 #step-1 convolution layer
 #here 32 is the no. of feature detector and 3,3 is the size
 #input_shape is the what to expect in input (here 64,64 sized color image 3 indicates colored)
+#In computational networks, the activation function of a node defines the output of that node given an input or set of inputs.
 #relu is the activation func to be used ie. f(x)=max(x,0)
 
 classifier.add(Convolution2D(32,3,3, input_shape=(64,64,3),activation='relu'))
@@ -35,13 +36,31 @@ classifier.add(Convolution2D(32,3,3,activation='relu'))
 classifier.add(MaxPooling2D(pool_size=(2,2)))
 
 #step-3 Flattening
-#basically converting the feature map matrix to single column matri of features
+#basically converting the feature map matrix to single column matrix of features
+#since each feature map contains the information of a special feature of the image 
+#hence each node of the flatted matrix represents special feature of the image  
 
 classifier.add(Flatten())
 
 #step-4 Full connected layer
+#here the choice of the no. of nodes is completely experiment based but it should not be too small to make it worse and not too big 
+#to make it highly computation expensive
 
 classifier.add(Dense(output_dim=128,activation='relu'))
+'''
+• Sigmoid functions are often used in artificial neural networks to
+introduce nonlinearity in the model.
+• A neural network element computes a linear combination of its input
+signals, and applies a sigmoid function to the result. A reason for its
+popularity in neural networks is because the sigmoid function satisfies
+a property between the derivative and itself such that it is
+computationally easy to perform.
+ <-------------------- dervative(sig(t)) = sig(t)(1-sig(t)-------------------------------------------------------->
+• Derivatives of the sigmoid function are usually employed in learning
+algorithms.
+
+'''
+
 classifier.add(Dense(output_dim=1,activation='sigmoid'))
 
 #compiling the CNN
